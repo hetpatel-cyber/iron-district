@@ -1,26 +1,294 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ─── Brand Design Tokens ─────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colours */
+  --color-charcoal-950: #0d0d0d;
+  --color-charcoal-900: #141414;
+  --color-charcoal-800: #1c1c1c;
+  --color-charcoal-700: #282828;
+  --color-charcoal-600: #363636;
+  --color-charcoal-500: #4a4a4a;
+  --color-offwhite-50:  #f9f7f4;
+  --color-offwhite-100: #f2efe9;
+  --color-offwhite-200: #e8e3da;
+  --color-lime-400:     #c6f135;
+  --color-lime-500:     #b5e020;
+  --color-lime-600:     #9ecb10;
+  --color-grey-400:     #9ca3af;
+  --color-grey-500:     #6b7280;
+  --color-grey-600:     #4b5563;
+
+  /* Typography — Barlow Condensed and Inter are loaded via Google Fonts <link> in layout.tsx */
+  --font-display: "Barlow Condensed", "Bebas Neue", "Arial Narrow", Impact, ui-sans-serif;
+  --font-sans:    "Inter", "Segoe UI", Arial, ui-sans-serif, system-ui, sans-serif;
+
+  /* Spacing scale extras */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light dark;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-charcoal-950);
+  color: var(--color-offwhite-50);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ────────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ─── Focus visible ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-lime-400);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-charcoal-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-charcoal-600);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-lime-400);
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Utility classes ───────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-lime {
+  color: var(--color-lime-400);
+}
+
+.bg-charcoal {
+  background-color: var(--color-charcoal-950);
+}
+
+.section-dark {
+  background-color: var(--color-charcoal-900);
+}
+
+.section-light {
+  background-color: var(--color-offwhite-50);
+  color: var(--color-charcoal-900);
+}
+
+.section-mid {
+  background-color: var(--color-charcoal-800);
+}
+
+/* ─── Button base ───────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-lime-400);
+  color: var(--color-charcoal-950);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background-color: var(--color-lime-500);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-lime-400);
+  outline-offset: 3px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-offwhite-50);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border: 2px solid var(--color-offwhite-50);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  background-color: var(--color-offwhite-50);
+  color: var(--color-charcoal-950);
+}
+
+.btn-outline-lime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-lime-400);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border: 2px solid var(--color-lime-400);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn-outline-lime:hover {
+  background-color: var(--color-lime-400);
+  color: var(--color-charcoal-950);
+}
+
+/* ─── Section label (overline) ──────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-lime-400);
+}
+
+/* ─── Horizontal rule ───────────────────────────────────────────────── */
+.rule-lime {
+  display: block;
+  width: 3rem;
+  height: 3px;
+  background-color: var(--color-lime-400);
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Footer social links ────────────────────────────────────────────── */
+.footer-social-link:hover {
+  border-color: var(--color-lime-400) !important;
+  color: var(--color-lime-400) !important;
+}
+
+/* ─── Nav link hover ─────────────────────────────────────────────────── */
+footer a:not(.btn-primary):not(.btn-outline):not(.btn-outline-lime):hover {
+  color: var(--color-offwhite-50);
+}
+
+/* ─── Image overlay helpers ─────────────────────────────────────────── */
+.overlay-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.7) 100%);
+  pointer-events: none;
+}
+
+/* ─── Accordion ─────────────────────────────────────────────────────── */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ─── Gallery lightbox ──────────────────────────────────────────────── */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.93);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Utility ────────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Responsive grid fixes ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .prog-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .prog-grid > div {
+    order: unset !important;
+    position: static !important;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .two-col-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .trainer-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
